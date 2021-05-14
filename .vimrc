@@ -116,11 +116,14 @@ set splitright
 set virtualedit=block
 set backspace=indent,eol,start
 set hidden
-set smartindent
 
 " formatting
 set formatoptions=n1j
 set foldlevel=99
+set smartindent
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
 
 " undo file
 if version > 720
@@ -130,3 +133,4 @@ endif
 
 " autocmds
 autocmd BufWritePre *.py execute ':Black'
+autocmd BufNewFile,BufRead *.py no <F5> :confirm w <bar> ~/anaconda3/bin/python %

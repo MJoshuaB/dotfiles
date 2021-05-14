@@ -1,3 +1,10 @@
+#  ____        ____  _                _
+# |  _ \ _   _| __ )| | ___ _ __   __| |
+# | |_) | | | |  _ \| |/ _ \ '_ \ / _` |
+# |  __/| |_| | |_) | |  __/ | | | (_| |
+# |_|    \__, |____/|_|\___|_| |_|\__,_|
+#        |___/
+
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
@@ -15,21 +22,6 @@ shopt -s globstar
 function getGitBranch {
 	echo "$(git branch 2>/dev/null | awk '/\* .+/ {print " (" $2 ")"}')"
 }
-
-# # custom prompt (PS1)
-# __prompt='\[\033[01;36m\]'
-# __prompt+='\u'
-# __prompt+='\[\033[32m\]@'
-# __prompt+='\[\033[36m\]\h'
-# __prompt+='\[\033[32m\]'
-# __prompt+=' \W'
-# __prompt+='\[\033[33m\]'
-# __prompt+='`getGitBranch`'
-# __prompt+='\[\033[36m\]'
-# __prompt+='\$ '
-# __prompt+='\[\033[0m\]'
-# export PS1=$__prompt
-# unset __prompt
 
 function parse_git_branch {
 
@@ -81,6 +73,9 @@ function parse_git_branch {
 }
 
 function awesome_prompt {
+
+	# Credit: https://gist.github.com/fzero/478cc0e41f16f8178e87
+
 	local      BLACK="\[\033[0;30m\]"
 	local  BLACKBOLD="\[\033[1;30m\]"
 	local        RED="\[\033[0;31m\]"
@@ -111,10 +106,10 @@ function awesome_prompt {
 	fi
 
 	HOSTPART="$CYANBOLD\u$GREENBOLD@$BLUEBOLD\h"
-	MAINPART="$GREENBOLD\W$GIT_PART$WHITE\$ "
+	MAINPART="$GREENBOLD\W$GIT_PART$WHITEBOLD\$$WHITE "
 
 	export PS1="$HOSTPART $MAINPART"
-	
+
 
 }
 
@@ -123,14 +118,20 @@ export PROMPT_COMMAND="awesome_prompt"
 export PS2='> '
 export PS4='+ '
 
+# +----------------------------------------------------------------------------
+# | ALIASES
+# +----------------------------------------------------------------------------
+
+
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-
-    alias ls='ls --color=auto'
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
+	test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+	alias ls='ls --color=auto --group-directories-first'
+	alias grep='grep --color=auto'
+	alias fgrep='fgrep --color=auto'
+	alias egrep='egrep --color=auto'
+else
+	alias ls='ls --group-directories-first'
 fi
 
 alias ll='ls -alh'
@@ -152,15 +153,6 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-
-# Alias definitions.
-if [ -f ~/.dotfiles/bash_aliases.sh ]; then
-    . ~/.dotfiles/bash_aliases.sh
-fi
-
-if [ -f ~/.dotfiles/bash_funcs.sh ]; then
-    . ~/.dotfiles/bash_funcs.sh
-fi
 
 ## Add anaconda3/bin to the path as fallback
 export PATH="$PATH:/home/joshua/anaconda3/bin"
