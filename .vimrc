@@ -43,11 +43,14 @@ no <leader>Q :q!<CR>
 " clear search
 no <leader><space> :let @/=''<CR>
 " show/hide non-printing chars
-no <leader>1 :set list!
+no <leader>1 :set list!<CR>
 
 " set magic search
 nno / /\v
 vno / /\v
+
+" unbind delete in normal mode
+nno <delete> <Nop>
 
 " ------------------------------------------------------------------------------
 "  -= Colors =-
@@ -100,7 +103,7 @@ set visualbell
 " security
 set modelines=0
 set nomodeline
-set statusline=%t\ %m%r%y
+set statusline=[%t]\ %m%r%y
 
 " status
 set shortmess=aAIsT
@@ -133,4 +136,4 @@ endif
 
 " autocmds
 autocmd BufWritePre *.py execute ':Black'
-autocmd BufNewFile,BufRead *.py no <F5> :confirm w <bar> ~/anaconda3/bin/python %
+autocmd BufNewFile,BufRead *.py no <F5> :confirm w <bar> !~/anaconda3/bin/python %<CR>

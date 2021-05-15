@@ -136,7 +136,7 @@ fi
 
 alias ll='ls -alh'
 alias la='ls -A'
-alias l='ls -CF'
+alias l='ls'
 
 alias ipy='ipython'
 alias df='df -h'
