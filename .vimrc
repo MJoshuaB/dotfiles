@@ -44,6 +44,8 @@ no <leader>Q :q!<CR>
 no <leader><space> :let @/=''<CR>
 " show/hide non-printing chars
 no <leader>1 :set list!<CR>
+" show hide spell-checking
+nno <leader>s :set spell!<CR>
 
 " set magic search
 nno / /\v
@@ -103,13 +105,13 @@ set visualbell
 " security
 set modelines=0
 set nomodeline
-set statusline=[%t]\ %m%r%y
+set statusline=\ %t\ %m%r%y
 
 " status
 set shortmess=aAIsT
 set nosmd
 set noshowcmd
-set cmdheight=1
+set cmdheight=2
 set laststatus=2
 
 " splitting

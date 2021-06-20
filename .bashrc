@@ -134,12 +134,13 @@ else
 	alias ls='ls --group-directories-first'
 fi
 
-alias ll='ls -alh'
+alias ll='ls -Alh'
 alias la='ls -A'
 alias l='ls'
 
 alias ipy='ipython'
-alias df='df -h'
+alias df='df -h --total'
+alias du='du -h -d 1'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias xclip='xclip -selection clipboard'
