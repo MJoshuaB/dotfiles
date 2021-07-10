@@ -34,11 +34,18 @@ no <C-l> :wincmd l<CR>
 nno k kddpk
 " ALT+j move line down
 nno j ddp
+" ALT+l move visual selection right
+vno l xp`<lma`>lmb`a`b
+" ALT+h move visual selection left
+vno h xhhp`<hma`>hmb`a`b
 
 " write, quit, force-quit
 no <leader>w :w<CR>
 no <leader>q :q<CR>
 no <leader>Q :q!<CR>
+
+" reload .vimrc
+no <leader>r :source ~/.vimrc<CR>
 
 " clear search
 no <leader><space> :let @/=''<CR>
@@ -139,3 +146,12 @@ endif
 " autocmds
 autocmd BufWritePre *.py execute ':Black'
 autocmd BufNewFile,BufRead *.py no <F5> :confirm w <bar> !~/anaconda3/bin/python %<CR>
+
+" testing vimscript
+" getpos(".") get the current cursor pos as [bufnum, y, x, virtedit]
+" :h function-list; for full list of functions
+:no <leader>t :call Test()<CR>
+
+function! Test()
+	echo getline(".")
+endfunction

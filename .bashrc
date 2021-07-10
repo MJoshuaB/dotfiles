@@ -18,12 +18,20 @@ shopt -s globstar
 
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-# this should all be tidied up a bit
-function getGitBranch {
-	echo "$(git branch 2>/dev/null | awk '/\* .+/ {print " (" $2 ")"}')"
-}
+# +------------------------------------------
+# | COLORS
+# +------------------------------------------
 
-function parse_git_branch {
+   RED="\033[1;31m"
+ GREEN="\033[1;32m"
+YELLOW="\033[1;33m"
+  BLUE="\033[1;34m"
+PURPLE="\033[1;35m"
+  CYAN="\033[1;36m"
+ WHITE="\033[1;37m"
+NORMAL="\033[0;39m"
+
+ParseGitBranch() {
 
 	# Credit: https://gist.github.com/fzero/478cc0e41f16f8178e87
 
@@ -72,56 +80,110 @@ function parse_git_branch {
 
 }
 
-function awesome_prompt {
+# echoing escaped color codes leads to unexpected bahaviour
+# i.e. unexpected carriage return mid line after end of prompt
 
-	# Credit: https://gist.github.com/fzero/478cc0e41f16f8178e87
-
-	local      BLACK="\[\033[0;30m\]"
-	local  BLACKBOLD="\[\033[1;30m\]"
-	local        RED="\[\033[0;31m\]"
-	local    REDBOLD="\[\033[1;31m\]"
-	local      GREEN="\[\033[0;32m\]"
-	local  GREENBOLD="\[\033[1;32m\]"
-	local     YELLOW="\[\033[0;33m\]"
-	local YELLOWBOLD="\[\033[1;33m\]"
-	local       BLUE="\[\033[0;34m\]"
-	local   BLUEBOLD="\[\033[1;34m\]"
-	local     PURPLE="\[\033[0;35m\]"
-	local PURPLEBOLD="\[\033[1;35m\]"
-	local       CYAN="\[\033[0;36m\]"
-	local   CYANBOLD="\[\033[1;36m\]"
-	local      WHITE="\[\033[0;37m\]"
-	local  WHITEBOLD="\[\033[1;37m\]"
-
-	parse_git_branch
-
+GitInfo() {
+	ParseGitBranch
 	GIT_PART=""
 	if [[ "$GIT_BRANCH" != "" ]]; then
 		if [[ "$GIT_CLEAN" == "dirty" ]]; then
-			GIT_BRANCH_COLOR=$YELLOWBOLD
+			BRANCH_COLOR=$YELLOW
 		else
-			GIT_BRANCH_COLOR=$GREENBOLD
+			BRANCH_COLOR=$GREEN
 		fi
-		GIT_PART="$BLUEBOLD($GIT_BRANCH_COLOR$GIT_BRANCH$YELLOWBOLD$GIT_REMOTE$REDBOLD$GIT_UNTRACKED$BLUEBOLD)"
+		GIT_PART="$BLUE($BRANCH_COLOR$GIT_BRANCH$YELLOW$GIT_REMOTE$RED$GIT_UNTRACKED$BLUE)$WHITE"
 	fi
-
-	HOSTPART="$CYANBOLD\u$GREENBOLD@$BLUEBOLD\h"
-	MAINPART="$GREENBOLD\W$GIT_PART$WHITEBOLD\$$WHITE "
-
-	export PS1="$HOSTPART $MAINPART"
-
-
 }
 
+# Hack functions to get PS1 to update
+
+GitPre() {
+	if [[ "$GIT_BRANCH" != "" ]]; then
+		echo -n "("
+	fi
+}
+
+GitClean() {
+	if [[ "$GIT_BRANCH" != "" ]]; then
+		if [[ "$GIT_CLEAN" != "dirty" ]]; then
+			echo -n "$GIT_BRANCH"
+		fi
+	fi
+}
+
+GitDirty() {
+	if [[ "$GIT_BRANCH" != "" ]]; then
+		if [[ "$GIT_CLEAN" == "dirty" ]]; then
+			echo -n "$GIT_BRANCH"
+		fi
+	fi
+}
+
+GitRemote() {
+	echo -n "$GIT_REMOTE"
+}
+
+GitUntracked() {
+	echo -n "$GIT_UNTRACKED"
+}
+
+GitPost() {
+	if [[ "$GIT_BRANCH" != "" ]]; then
+		echo -n ")"
+	fi
+}
+
+Prompt() {
+	# setup colors
+	local K="\[\033[1;30m\]" # BLACK
+	local R="\[\033[1;31m\]" # RED
+	local G="\[\033[1;32m\]" # GREEN
+	local Y="\[\033[1;33m\]" # YELLOW
+	local B="\[\033[1;34m\]" # BLUE
+	local P="\[\033[1;35m\]" # PURPLE
+	local C="\[\033[1;36m\]" # CYAN
+	local W="\[\033[1;37m\]" # WHITE
+	local N="\[\033[0;39m\]" # NORMAL
+
+	export PROMPT_COMMAND=""
+	GIT_BIT="$B\$(GitPre)$G\$(GitClean)$Y\$(GitDirty)\$(GitRemote)$R\$(GitUntracked)$B\$(GitPost)"
+	case "$1" in
+		short)
+			PS1="$W\$$N "
+			;;
+		dir)
+			PS1="$G\W$W\$$N "
+			;;
+		block)
+			export PROMPT_COMMAND="GitInfo"
+			PS1="$B[$G\W$B$GIT_BIT$B]$W\$$N "
+			;;
+		*)
+			export PROMPT_COMMAND="GitInfo"
+			PS1="$C\u$G@$B\h $G\W$B\$(GitPre)$G\$(GitClean)$Y\$(GitDirty)\$(GitRemote)$R\$(GitUntracked)$B\$(GitPost)$W\$$N "
+			;;
+	esac
+}
+
+# +------------------------
+# | Prompt ideas
+# +------------------------
+#
+# Default: "user@host short_cwd(git)$ "
+# Short  : "$ "
+# Dir    : "short_cwd$ "
+# Block  : "[short_cwd|git]$ "
+
 export PROMPT_DIRTRIM=1
-export PROMPT_COMMAND="awesome_prompt"
+# export PS1="\[$CYAN\]\u\[$GREEN\]@\[$BLUE\]\h \[$GREEN\]\W\[$WHITE\]\$\[$NORMAL\] "
+Prompt # Create default prompt
 export PS2='> '
 export PS4='+ '
 
 # +----------------------------------------------------------------------------
 # | ALIASES
 # +----------------------------------------------------------------------------
-
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
