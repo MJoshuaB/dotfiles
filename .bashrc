@@ -159,9 +159,12 @@ Prompt() {
 			export PROMPT_COMMAND="GitInfo"
 			PS1="$B[$G\W$B$GIT_BIT$B]$W\$$N "
 			;;
-		*)
+		default)
 			export PROMPT_COMMAND="GitInfo"
 			PS1="$C\u$G@$B\h $G\W$B\$(GitPre)$G\$(GitClean)$Y\$(GitDirty)\$(GitRemote)$R\$(GitUntracked)$B\$(GitPost)$W\$$N "
+			;;
+		*)
+			echo "Usage: Prompt [short|dir|block|default]"
 			;;
 	esac
 }
@@ -177,7 +180,7 @@ Prompt() {
 
 export PROMPT_DIRTRIM=1
 # export PS1="\[$CYAN\]\u\[$GREEN\]@\[$BLUE\]\h \[$GREEN\]\W\[$WHITE\]\$\[$NORMAL\] "
-Prompt # Create default prompt
+Prompt default # Create default prompt
 export PS2='> '
 export PS4='+ '
 
