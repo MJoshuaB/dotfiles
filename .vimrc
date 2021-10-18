@@ -145,4 +145,5 @@ endif
 
 " autocmds
 autocmd BufWritePre *.py execute ':Black'
-autocmd BufNewFile,BufRead *.py no <F5> :confirm w <bar> !~/anaconda3/bin/python %<CR>
+autocmd BufNewFile,BufRead *.py nn <F5> :confirm w <bar> !/usr/bin/env python3 %<CR>
+autocmd BufNewFile,BufRead *.sh nn <F5> :!bash %<CR>

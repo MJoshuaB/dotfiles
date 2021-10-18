@@ -202,6 +202,8 @@ fi
 alias ll='ls -Alh'
 alias la='ls -A'
 alias l='ls'
+# cuz furreal
+alias sl='ls'
 
 alias ipy='ipython'
 alias df='df -h --total'
@@ -212,6 +214,11 @@ alias xclip='xclip -selection clipboard'
 
 # git dotfiles repo alias setup
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
+
+# general git aliases
+alias gs='git status'
+alias ga='git add'
+alias gc='git commit'
 
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
