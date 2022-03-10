@@ -112,7 +112,7 @@ set visualbell
 " security
 set modelines=0
 set nomodeline
-set statusline=\ %t\ %m%r%y
+set statusline=%2n)%t\ %m%r%y%=%c%V:%l\ %-4P
 
 " status
 set shortmess=aAIsT
@@ -147,3 +147,4 @@ endif
 autocmd BufWritePre *.py execute ':Black'
 autocmd BufNewFile,BufRead *.py nn <F5> :confirm w <bar> !/usr/bin/env python3 %<CR>
 autocmd BufNewFile,BufRead *.sh nn <F5> :!bash %<CR>
+autocmd BufNewFile,BufRead *.md :set spell

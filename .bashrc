@@ -207,10 +207,11 @@ alias sl='ls'
 
 alias ipy='ipython'
 alias df='df -h --total'
-alias du='du -h -d 1'
+alias du='du -ha -d 1'
 alias ..='cd ..'
 alias ...='cd ../..'
-alias xclip='xclip -selection clipboard'
+alias ctrl-c='xclip -selection clipboard'
+alias ctrl-v='xclip -o -selection clipboard'
 
 # git dotfiles repo alias setup
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
@@ -225,3 +226,4 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 
 ## Add anaconda3/bin to the path as fallback
 export PATH="$PATH:$HOME/anaconda3/bin"
+export PICO_SDK_PATH=~/Code/pico/pico-sdk
