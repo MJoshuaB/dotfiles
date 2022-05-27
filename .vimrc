@@ -15,6 +15,10 @@ no <Up> <Nop>
 no <Down> <Nop>
 no <Left> <Nop>
 no <Right> <Nop>
+ino <Up> <Nop>
+ino <Down> <Nop>
+ino <Left> <Nop>
+ino <Right> <Nop>
 
 " ------------------------------------------------------------------------------
 "  -= Leader Key =-
@@ -149,6 +153,6 @@ endif
 
 " autocmds
 autocmd BufWritePre *.py execute ':Black'
-autocmd BufNewFile,BufRead *.py nn <F5> :confirm w <bar> !/usr/bin/env python3 %<CR>
+autocmd BufNewFile,BufRead *.py nn <F5> :!/usr/bin/env python3 %<CR>
 autocmd BufNewFile,BufRead *.sh nn <F5> :!bash %<CR>
 autocmd BufNewFile,BufRead *.md :set spell
