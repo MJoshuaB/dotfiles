@@ -1,0 +1,10 @@
+@theme "~/.config/rofi/themes/cyan.rasi"
+
+configuration {
+	modi: "window,run,drun";
+	show-icons: false;
+	sidebar-mode: true;
+	display-window: "Windows";
+	display-run: "Run";
+	display-drun: "Apps";
+}

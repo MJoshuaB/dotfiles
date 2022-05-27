@@ -8,13 +8,16 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-HISTCONTROL=ignoreboth
+HISTCONTROL=ignoreboth:erasedups
 HISTSIZE=1000
 HISTFILESIZE=2000
+HISTIGNORE="l:l[als]:cd*:..:...:* --help:history:gs"
 
 shopt -s histappend
 shopt -s checkwinsize
 shopt -s globstar
+shopt -s histverify
+shopt -s dirspell
 
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
@@ -205,11 +208,14 @@ alias l='ls'
 # cuz furreal
 alias sl='ls'
 
-alias ipy='ipython'
+# set less' tab width to 2 spaces
+export LESS=-x2
+
 alias df='df -h --total'
-alias du='du -ha -d 1'
+alias du='du -h -d 1'
 alias ..='cd ..'
 alias ...='cd ../..'
+alias tree="tree --dirsfirst"
 alias ctrl-c='xclip -selection clipboard'
 alias ctrl-v='xclip -o -selection clipboard'
 
@@ -225,5 +231,6 @@ alias gc='git commit'
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 ## Add anaconda3/bin to the path as fallback
-export PATH="$PATH:$HOME/anaconda3/bin"
 export PICO_SDK_PATH=~/Code/pico/pico-sdk
+
+tabs 4

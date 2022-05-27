@@ -112,9 +112,9 @@ set visualbell
 " security
 set modelines=0
 set nomodeline
-set statusline=%2n)%t\ %m%r%y%=%c%V:%l\ %-4P
 
 " status
+set statusline=%2n)%t\ %m%r%y%=%c%V:%l\ %-4P
 set shortmess=aAIsT
 set nosmd
 set noshowcmd
@@ -128,6 +128,10 @@ set splitright
 set virtualedit=block
 set backspace=indent,eol,start
 set hidden
+set clipboard=unnamed
+if has('unnamedplus')
+	set clipboard+=unnamedplus
+endif
 
 " formatting
 set formatoptions=n1j

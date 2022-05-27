@@ -1,0 +1,99 @@
+/**
+ * ROFI 'Cyan' Color Theme
+ * User: PyBlend
+ * Copyright: PyBlend
+ */
+
+* {
+    fg:                          rgba ( 248, 248, 242, 100 % );
+    bg:                          rgba (  19,  20,  17, 100 % );
+    cyan:                        rgba (   0, 255, 255, 100 % );
+}
+#window {
+    background-color:       @bg;
+    border:           0;
+    padding:          0;
+    border-radius:    10;
+}
+#mainbox {
+    background-color: transparent;
+    border:  0;
+    padding: 10;
+}
+#message {
+    border:       0;
+    border-color: @cyan;
+    padding:      0;
+}
+#textbox {
+    text-color: @fg;
+}
+#listview {
+    fixed-height: 0;
+    border:       0;
+    border-color: @cyan;
+    background-color:   @bg;
+    spacing:      0;
+    scrollbar:    false;
+    padding:      5 0 0;
+}
+#element {
+    padding: 2;
+    border-radius: 2;
+}
+#element normal.normal,
+element alternate.normal {
+    color:   @fg;
+    background-color: @bg;
+}
+#element normal.active {
+    color: @cyan;
+}
+#element selected.normal,
+element selected.active {
+    color: @bg;
+    background-color: @cyan;
+}
+#scrollbar {
+    width:        4;
+    border:       0;
+    handle-width: 8;
+    padding:      0;
+}
+#sidebar {
+    spacing:      100;
+    border:       0;
+    background-color:   @bg;
+}
+#button {
+    padding: 5;
+    border-radius: 5;
+}
+#button normal.normal{
+    background-color: @bg;
+    color: @fg;
+}
+#button selected.normal {
+    background-color: @cyan;
+    color: @bg;
+}
+#inputbar {
+    spacing:    0;
+    background-color: @bg;
+}
+#case-indicator {
+    spacing:    0;
+    text-color: @fg;
+    background-color: @bg;
+}
+#entry {
+    text-color: @fg;
+    background-color: transparent;
+    padding: 5;
+}
+#prompt {
+    text-color: @bg;
+    background-color: @cyan;
+    padding: 5;
+    border-radius: 5;
+}
